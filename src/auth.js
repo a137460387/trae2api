@@ -696,7 +696,6 @@ function poolFailover(code, message) {
 }
 
 function poolStatus() {
-  const want = getUpstreamEdition() || (process.env.TRAE_EDITION ? detectEdition() : null);
   const members = _poolLoad().map(m => ({
     userId: m.userId,
     account: m.account && (m.account.username || m.account.nonPlainTextMobile) || m.userId,
@@ -706,7 +705,11 @@ function poolStatus() {
     exhausted: !!m.exhaustedUntil && m.exhaustedUntil > Date.now(),
     dead: !!m.dead,
     benched: m.enabled === false,
-    served: !want || (m._edition || 'cn') === want, // selectable under the active upstream
+    // Whether this member would actually be picked right now. Realm match alone is
+    // not enough — a benched, dead, cooled-down or expired member is skipped by the
+    // rotation, and a status view that ignores that reports unusable accounts as
+    // available, which is exactly how you end up debugging the wrong thing.
+    served: _poolHealthy(m),
     lastError: m.lastError || null,
     lastUsedAt: m.lastUsedAt || null,
     active: m.userId === _poolActiveUserId,

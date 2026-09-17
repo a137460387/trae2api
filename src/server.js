@@ -7,6 +7,7 @@ require('dotenv').config();
 const PACKAGE_VERSION = require('../package.json').version;
 
 const { getAuthInfo, getDeviceIds, isTokenExpired, getApiHost, refreshTokenIfNeeded, detectEdition, isAccountFailoverCode, poolFailover, poolStatus, poolEnabled, getUpstreamStatus, setUpstreamEdition, clearUpstreamEdition } = require('./auth');
+const { chatHostFor } = require('./realms');
 const { llmUtilsChat, chatCompletion, createAgentTask, getModelDetailParam, getChatModes, resolveModelId, MODEL_MAP, REVERSE_MODEL_MAP, FUNCTION_MAP, getFallbackConfig, saveFallbackConfig, getFallbackChain, isRaceFallbackEnabled, getTiers, getModelsInTier, getTierOfModel, isTieredFallbackEnabled, isRaceWithinTierEnabled, getFallbackModel, getSameTierModels, getNextTierModels, findMultimodalModel, getModelConfig, saveModelConfig, rebuildDerivedMaps } = require('./trae-client');
 const { createOpenAIChatCompletion, createOpenAIStreamChunk, createOpenAIModels, parseLlmUtilsChatStream, llmUtilsChunkToOpenAI, parseAgentTaskStream, parseTraeStreamChunk, traeChunkToOpenAI, extractToolcallsFromText, createOpenAIToolcallStreamFilter, buildOpenAIToolCallStreamDeltas } = require('./openai-format');
 const {
@@ -1763,8 +1764,12 @@ app.get('/v1/status', authenticate, async (req, res) => {
     // TRAE_PER_ACCOUNT_DEVICE_IDS experiment is enabled (default off — see auth.js)
     const usePerAccount = process.env.TRAE_PER_ACCOUNT_DEVICE_IDS === 'on';
     const deviceIds = (usePerAccount && authInfo.deviceIds && authInfo.deviceIds.soloDeviceId) ? authInfo.deviceIds : getDeviceIds();
-    const apiHost = getApiHost();
-    const edition = detectEdition();
+    // Report the host a request would really use. Requests resolve their host from the
+    // credential they were handed (per-request realm routing), so reading the
+    // process-wide getApiHost() here can name the wrong realm and send you chasing a
+    // routing bug that is not there.
+    const apiHost = process.env.TRAE_API_HOST || chatHostFor(authInfo._edition, authInfo.userRegion);
+    const edition = authInfo._edition || detectEdition();
     res.json({
       status: 'ok',
       edition: edition,

@@ -105,6 +105,19 @@ export ANTHROPIC_AUTH_TOKEN=sk-trae2api-local
 
 不同模型族对前缀的响应差异很大，矩阵与实测数据见 [`doc/think-effort.md`](doc/think-effort.md)。
 
+## Auto-continue（长思考不空结束）
+
+上游有时**只输出思考就结束**，客户端表现为「正常结束但没有答案」。网关在服务端统一兜底（OpenAI 与 Anthropic 共用同一逻辑）：
+
+| 情况 | 处理 |
+|------|------|
+| 只有思考、无正文、无工具调用 | 自动再请求一轮 |
+| 半截输出（代码块未闭合、句尾断裂，含全角 `：` `，` `；` `、`） | 自动续写 |
+| 工具调用被上游截断（`<toolcall>` JSON 解析失败、调用被丢弃） | 强制续写，不把残缺回合当作正常结束 |
+| `finish_reason=length` | 自动续写 |
+
+上限由 `MAX_CONTINUES` 控制（默认 10）。日志关键字：`auto_continue ... reason=reasoning_only`、`reason=toolcall_parse_failed`。
+
 ## 项目结构
 
 ```
@@ -131,6 +144,37 @@ docs/PROTOCOL.md       协议实测记录（最有价值的参考文档）
 | [`docs/PROTOCOL.md`](docs/PROTOCOL.md) | Trae 协议实测大全：认证、请求头、错误码语义、两套模型目录、区域差异 |
 | [`doc/think-effort.md`](doc/think-effort.md) | 推理深度控制的前缀方案与 A/B 实验数据 |
 | [`accounts/README.md`](accounts/README.md) | 账号池文件格式与安全须知 |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | 开发约定、敏感信息红线、如何贡献协议实测 |
+| [`TODO.md`](TODO.md) | 已知缺口与路线图 |
+
+## FAQ 与故障排查
+
+| 现象 | 原因与处理 |
+|------|-----------|
+| 启动报 `no auth` / 读不到凭证 | 先在 Trae 客户端登录；或设置 `TRAE_DATA_DIR` 指向该客户端的数据目录 |
+| 请求很慢、排队久 | 看日志里的 `function=`：应为 `solo_work_lite`。若是 `chat_v3`，说明落回了拥挤的通用池 |
+| `Error 4001 param is invalid` | **模型名不在当前区域的目录里**。两个区域的模型清单近乎不通用（见 [`docs/PROTOCOL.md`](docs/PROTOCOL.md)），常见于：① 用了另一区域的模型名；② 池里没有该区域的可用账号；③ `渠道//模型名` 这类第三方名（仅官方客户端通道支持）。日志里若 `function=chat_v3`，多半是产品线判定问题（`TRAE_PRODUCT=solo`）而非账号权限 |
+| `Error 1005` | 套餐权益不足。该模型在你账号的订阅档位之外（国际版 Free 档会锁 `gpt-6-astra`、`gpt-5.6` 系、`gpt-5.5`、`glm-5.2`），与区域路由无关 |
+| `Error 4008` | 账号配额耗尽，网关会自动冷却并换下一个账号；池里全部耗尽才报错 |
+| `Error 4017` | 设备/IP 级风控（常见于多账号同设备）。换设备指纹或降低并发，换账号通常无效 |
+| 切换区域后模型全报 4001 | 切区域**不会**让模型名变通用。请用目标区域的原生模型名，Claude 别名默认映射到国内版模型 |
+| `think_effort` 无效果 | 仅部分模型族支持；看日志 `injected=yes/no`。矩阵见 [`doc/think-effort.md`](doc/think-effort.md) |
+| 客户端「正常结束但没答案」 | 上游只输出了思考；确认 `AUTO_CONTINUE=true`，日志应有 `reason=reasoning_only` |
+| 回复说到一半就停 | 上游把工具调用 JSON 截断并丢弃；日志应有 `toolcall parse fail` + `reason=toolcall_parse_failed` |
+
+查看当前状态：
+
+```bash
+curl http://127.0.0.1:19950/v1/status -H "Authorization: Bearer sk-trae2api-local"
+curl http://127.0.0.1:19950/v1/pool   -H "Authorization: Bearer sk-trae2api-local"
+```
+
+同步官方模型表（结果写入 `output/`，已 gitignore）：
+
+```bash
+node scripts/dump-model-detail.js   # solo_work_lite 目录
+node scripts/fetch-models.js        # chat_v3 目录，并与本地 model-config.json 比对
+```
 
 ## 免责声明
 

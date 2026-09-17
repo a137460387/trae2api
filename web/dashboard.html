@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>trae2api - Dashboard</title>
+<title>trae2api - 网关看板</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2358a6ff'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='38' fill='white'%3ET%3C/text%3E%3C/svg%3E">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
@@ -406,14 +406,14 @@ tr:hover td { background: var(--table-hover); }
 <div class="header">
   <div>
     <span class="status-dot online" id="statusDot"></span>
-    <h1 style="display:inline">trae2api Dashboard</h1>
+    <h1 style="display:inline">trae2api 网关看板</h1>
   </div>
   <div class="links">
     <span id="clock" style="color:var(--text-muted);font-size:13px"></span>
-    <button class="theme-btn" onclick="toggleTheme()" id="themeToggle" title="Toggle theme">&#9728;&#65039;</button>
-    <button class="theme-btn" onclick="openFallbackSettings()" title="Model Fallback Settings">&#9881;&#65039;</button>
-    <button class="theme-btn" onclick="openModelConfig()" title="Model Config">&#128295;</button>
-    <a href="/?key=" id="apiInfoLink">API Info</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeToggle" title="切换主题">&#9728;&#65039;</button>
+    <button class="theme-btn" onclick="openFallbackSettings()" title="模型降级设置">&#9881;&#65039;</button>
+    <button class="theme-btn" onclick="openModelConfig()" title="模型配置">&#128295;</button>
+    <a href="/?key=" id="apiInfoLink">API 信息</a>
     <a href="https://github.com/ZedeX/trae-local-api" target="_blank">GitHub</a>
   </div>
 </div>
@@ -422,28 +422,28 @@ tr:hover td { background: var(--table-hover); }
 
 <!-- API Key Required -->
 <div id="loginPrompt" style="background:var(--yellow-bg);border:1px solid var(--yellow);border-radius:8px;padding:16px;margin-bottom:20px;text-align:center">
-  <p style="color:var(--yellow);margin:0">API Key required. Add <span style="color:var(--accent)">?key=YOUR_API_KEY</span> to the URL to authenticate.</p>
+  <p style="color:var(--yellow);margin:0">需要 API Key。请在 URL 后添加 <span style="color:var(--accent)">?key=YOUR_API_KEY</span> 进行认证。</p>
 </div>
 
 <!-- Stats Row -->
 <div class="stats-row">
   <div class="stat-card">
-    <div class="label">Total Requests</div>
+    <div class="label">总请求数</div>
     <div class="value" id="statRequests">-</div>
-    <div class="sub" id="statActive">Active: -</div>
+    <div class="sub" id="statActive">活跃: -</div>
   </div>
   <div class="stat-card">
-    <div class="label">Total Tokens</div>
+    <div class="label">总 Token 数</div>
     <div class="value" id="statTokens">-</div>
-    <div class="sub" id="statTokensDetail">In: - / Out: -</div>
+    <div class="sub" id="statTokensDetail">输入: - / 输出: -</div>
   </div>
   <div class="stat-card">
-    <div class="label">Avg Duration</div>
+    <div class="label">平均耗时</div>
     <div class="value" id="statDuration">-</div>
-    <div class="sub" id="statTotalDuration">Total: -</div>
+    <div class="sub" id="statTotalDuration">总计: -</div>
   </div>
   <div class="stat-card">
-    <div class="label">Server Uptime</div>
+    <div class="label">服务运行时长</div>
     <div class="value" id="statUptime">-</div>
     <div class="sub" id="statVersion">v-</div>
   </div>
@@ -451,33 +451,33 @@ tr:hover td { background: var(--table-hover); }
 
 <!-- Status Bar -->
 <div class="status-bar">
-  <div class="item"><span class="key">Auto-Continue:</span><span class="val green" id="statusAuto">-</span></div>
-  <div class="item"><span class="key">Max Continues:</span><span class="val" id="statusMaxContinue">-</span></div>
-  <div class="item"><span class="key">Port:</span><span class="val" id="statusPort">-</span></div>
-  <div class="item"><span class="key">Workspace Dir:</span><span class="val blue" id="statusWorkspace">-</span></div>
-  <div class="item"><span class="key">Sync Dir:</span><span class="val blue" id="statusSync">-</span></div>
+  <div class="item"><span class="key">自动续写:</span><span class="val green" id="statusAuto">-</span></div>
+  <div class="item"><span class="key">最大续写次数:</span><span class="val" id="statusMaxContinue">-</span></div>
+  <div class="item"><span class="key">端口:</span><span class="val" id="statusPort">-</span></div>
+  <div class="item"><span class="key">工作区目录:</span><span class="val blue" id="statusWorkspace">-</span></div>
+  <div class="item"><span class="key">同步目录:</span><span class="val blue" id="statusSync">-</span></div>
 </div>
 
 <!-- Filter Bar -->
 <div class="filter-bar">
-  <label style="color:var(--text-muted);font-size:13px">Workspace:</label>
+  <label style="color:var(--text-muted);font-size:13px">工作区:</label>
   <select id="wsFilter" onchange="refreshAll()">
-    <option value="">All Workspaces</option>
+    <option value="">全部工作区</option>
   </select>
-  <span class="btn" id="btnAutoRefresh" onclick="toggleAutoRefresh()">Auto Refresh: ON</span>
-  <span class="btn" onclick="refreshAll()">Refresh Now</span>
-  <span class="refresh-notice">Last refresh: <span id="lastRefresh">-</span></span>
+  <span class="btn" id="btnAutoRefresh" onclick="toggleAutoRefresh()">自动刷新: 开</span>
+  <span class="btn" onclick="refreshAll()">立即刷新</span>
+  <span class="refresh-notice">上次刷新: <span id="lastRefresh">-</span></span>
 </div>
 
 <!-- Active Requests -->
 <div class="panel" style="margin-bottom:20px" id="activePanel">
   <div class="panel-header">
-    <h2>&#9673; Active Requests</h2>
-    <span style="font-size:12px;color:var(--text-muted)" id="activeCount">0 streaming</span>
+    <h2>&#9673; 活跃请求</h2>
+    <span style="font-size:12px;color:var(--text-muted)" id="activeCount">0 个流式请求</span>
   </div>
   <div class="panel-body">
     <div class="active-list" id="activeList">
-      <div class="empty">No active streaming requests</div>
+      <div class="empty">暂无活跃的流式请求</div>
     </div>
   </div>
 </div>
@@ -485,13 +485,13 @@ tr:hover td { background: var(--table-hover); }
 <!-- Charts Row -->
 <div class="row">
   <div class="panel">
-    <div class="panel-header"><h2>&#9776; Token Usage Over Time</h2></div>
+    <div class="panel-header"><h2>&#9776; Token 用量趋势</h2></div>
     <div class="panel-body">
       <div class="chart-wrap"><canvas id="chartTimeline"></canvas></div>
     </div>
   </div>
   <div class="panel">
-    <div class="panel-header"><h2>&#9673; Tokens by Model</h2></div>
+    <div class="panel-header"><h2>&#9673; 各模型 Token 用量</h2></div>
     <div class="panel-body">
       <div class="chart-wrap"><canvas id="chartModel"></canvas></div>
     </div>
@@ -501,25 +501,25 @@ tr:hover td { background: var(--table-hover); }
 <!-- Request Log Table -->
 <div class="panel">
   <div class="panel-header">
-    <h2>&#9776; Recent Requests</h2>
+    <h2>&#9776; 最近请求</h2>
     <span style="font-size:12px;color:var(--text-muted)" id="requestCount">-</span>
   </div>
   <div class="panel-body" style="padding:0;overflow-x:auto">
     <table>
       <thead>
         <tr>
-          <th>Time</th>
+          <th>时间</th>
           <th>ID</th>
-          <th>Workspace</th>
-          <th>Model</th>
-          <th>Tokens</th>
-          <th>Duration</th>
-          <th>Status</th>
-          <th>Type</th>
+          <th>工作区</th>
+          <th>模型</th>
+          <th>Token</th>
+          <th>耗时</th>
+          <th>状态</th>
+          <th>类型</th>
         </tr>
       </thead>
       <tbody id="requestTable">
-        <tr><td colspan="8" class="empty">Loading...</td></tr>
+        <tr><td colspan="8" class="empty">加载中...</td></tr>
       </tbody>
     </table>
   </div>
@@ -532,15 +532,15 @@ tr:hover td { background: var(--table-hover); }
   <div class="modal-content">
     <div class="modal-header">
       <div>
-        <h2>Request Details <span class="modal-id" id="modalIdBadge"></span></h2>
+        <h2>请求详情 <span class="modal-id" id="modalIdBadge"></span></h2>
       </div>
       <button class="modal-close" onclick="closeModal()">&times;</button>
     </div>
     <div class="modal-tabs">
-      <button class="modal-tab active" onclick="switchModalTab('overview')">Overview</button>
-      <button class="modal-tab" onclick="switchModalTab('request')">Request</button>
-      <button class="modal-tab" onclick="switchModalTab('response')">Response</button>
-      <button class="modal-tab" onclick="switchModalTab('raw')">Raw JSON</button>
+      <button class="modal-tab active" onclick="switchModalTab('overview')">概览</button>
+      <button class="modal-tab" onclick="switchModalTab('request')">请求</button>
+      <button class="modal-tab" onclick="switchModalTab('response')">响应</button>
+      <button class="modal-tab" onclick="switchModalTab('raw')">原始 JSON</button>
     </div>
     <div class="modal-body">
       <div class="modal-tab-content active" id="tab-overview"></div>
@@ -555,35 +555,35 @@ tr:hover td { background: var(--table-hover); }
 <div class="modal-overlay" id="fallbackModal" onclick="if(event.target===this)closeFallbackSettings()">
   <div class="modal-content" style="max-width:960px">
     <div class="modal-header">
-      <h2>&#9881; Model Fallback Settings</h2>
+      <h2>&#9881; 模型降级设置</h2>
       <button class="modal-close" onclick="closeFallbackSettings()">&times;</button>
     </div>
     <div class="modal-body" style="max-height:70vh;overflow-y:auto;padding:20px">
       <div style="display:flex;gap:24px;align-items:center;margin-bottom:20px;flex-wrap:wrap">
         <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer">
-          <span style="color:var(--text-muted)">Auto Fallback</span>
+          <span style="color:var(--text-muted)">自动降级</span>
           <div class="toggle-switch" id="fbAutoToggle" onclick="toggleFallbackAuto()">
             <div class="toggle-knob"></div>
           </div>
-          <span id="fbAutoLabel" style="font-weight:600;color:var(--green)">ON</span>
+          <span id="fbAutoLabel" style="font-weight:600;color:var(--green)">开</span>
         </label>
         <label style="display:flex;align-items:center;gap:8px;font-size:14px">
-          <span style="color:var(--text-muted)">Queue Threshold</span>
+          <span style="color:var(--text-muted)">排队阈值</span>
           <input type="number" id="fbThreshold" min="1" max="99999" value="500"
             style="width:80px;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:14px;text-align:center">
         </label>
         <span style="font-size:12px;color:var(--text-dim)">排队超过此数值时自动降级</span>
       </div>
 
-      <div class="section-title" style="margin-top:0">Model Fallback Chains</div>
+      <div class="section-title" style="margin-top:0">模型降级链</div>
       <p style="font-size:12px;color:var(--text-dim);margin-bottom:12px">
         每个 Claude 模型最多配置 3 个降级模型，按顺序依次尝试。排队超阈值时自动切换到下一个降级模型。
       </p>
       <div id="fbMappingsContainer"></div>
 
       <div style="display:flex;gap:12px;margin-top:20px;justify-content:flex-end">
-        <button class="fb-btn fb-btn-secondary" onclick="loadFallbackConfigUI()">Reset</button>
-        <button class="fb-btn fb-btn-primary" onclick="saveFallbackConfigUI()">Save</button>
+        <button class="fb-btn fb-btn-secondary" onclick="loadFallbackConfigUI()">重置</button>
+        <button class="fb-btn fb-btn-primary" onclick="saveFallbackConfigUI()">保存</button>
       </div>
       <div id="fbSaveStatus" style="text-align:right;font-size:12px;margin-top:8px;min-height:18px"></div>
     </div>
@@ -594,7 +594,7 @@ tr:hover td { background: var(--table-hover); }
 <div class="modal-overlay" id="modelConfigModal" onclick="if(event.target===this)closeModelConfig()">
   <div class="modal-content" style="max-width:1060px">
     <div class="modal-header">
-      <h2>&#128295; Model Configuration</h2>
+      <h2>&#128295; 模型配置</h2>
       <button class="modal-close" onclick="closeModelConfig()">&times;</button>
     </div>
     <div class="modal-body" style="max-height:70vh;overflow-y:auto;padding:20px">
@@ -602,8 +602,8 @@ tr:hover td { background: var(--table-hover); }
       <div style="display:flex;gap:12px;margin-top:20px;justify-content:space-between;align-items:center;flex-wrap:wrap">
         <button class="fb-btn fb-btn-primary" onclick="mcShowAddForm()">&#43; 添加模型</button>
         <div style="display:flex;gap:12px;align-items:center">
-          <button class="fb-btn fb-btn-secondary" onclick="loadModelConfigUI()">Reset</button>
-          <button class="fb-btn fb-btn-primary" onclick="saveModelConfigUI()">Save All</button>
+          <button class="fb-btn fb-btn-secondary" onclick="loadModelConfigUI()">重置</button>
+          <button class="fb-btn fb-btn-primary" onclick="saveModelConfigUI()">全部保存</button>
         </div>
       </div>
       <div id="mcSaveStatus" style="text-align:right;font-size:12px;margin-top:8px;min-height:18px"></div>
@@ -621,16 +621,16 @@ tr:hover td { background: var(--table-hover); }
     <div class="modal-body" style="padding:20px">
       <div class="mc-form-grid">
         <label class="mc-form-label">模型名 (key)<span style="color:var(--red)">*</span>
-          <input type="text" id="mcFormKey" class="mc-form-input" placeholder="e.g. claude-sonnet-4-5">
+          <input type="text" id="mcFormKey" class="mc-form-input" placeholder="例如 claude-sonnet-4-5">
         </label>
         <label class="mc-form-label">config_name
-          <input type="text" id="mcFormConfigName" class="mc-form-input" placeholder="e.g. Claude Sonnet 4.5">
+          <input type="text" id="mcFormConfigName" class="mc-form-input" placeholder="例如 Claude Sonnet 4.5">
         </label>
         <label class="mc-form-label">function
-          <input type="text" id="mcFormFunction" class="mc-form-input" placeholder="e.g. chatCompletion">
+          <input type="text" id="mcFormFunction" class="mc-form-input" placeholder="例如 chatCompletion">
         </label>
         <label class="mc-form-label">category
-          <input type="text" id="mcFormCategory" class="mc-form-input" placeholder="e.g. claude">
+          <input type="text" id="mcFormCategory" class="mc-form-input" placeholder="例如 claude">
         </label>
         <label class="mc-form-label">toolcall_compatible
           <select id="mcFormToolcall" class="mc-form-input">
@@ -641,8 +641,8 @@ tr:hover td { background: var(--table-hover); }
         </label>
       </div>
       <div style="display:flex;gap:12px;margin-top:20px;justify-content:flex-end">
-        <button class="fb-btn fb-btn-secondary" onclick="mcCloseForm()">Cancel</button>
-        <button class="fb-btn fb-btn-primary" id="mcFormSubmitBtn" onclick="mcSubmitForm()">Add</button>
+        <button class="fb-btn fb-btn-secondary" onclick="mcCloseForm()">取消</button>
+        <button class="fb-btn fb-btn-primary" id="mcFormSubmitBtn" onclick="mcSubmitForm()">添加</button>
       </div>
     </div>
   </div>
@@ -668,7 +668,7 @@ if (apiKey) {
   document.getElementById('apiInfoLink').href = '/?key=' + encodeURIComponent(apiKey);
 } else {
   document.getElementById('loginPrompt').style.display = 'block';
-  document.getElementById('statUptime').textContent = 'Login required';
+  document.getElementById('statUptime').textContent = '需要登录';
 }
 
 // ===== Theme =====
@@ -744,7 +744,7 @@ function formatDuration(ms) {
 function toggleAutoRefresh() {
   autoRefreshOn = !autoRefreshOn;
   const btn = document.getElementById('btnAutoRefresh');
-  btn.textContent = 'Auto Refresh: ' + (autoRefreshOn ? 'ON' : 'OFF');
+  btn.textContent = '自动刷新: ' + (autoRefreshOn ? '开' : '关');
   btn.className = 'btn' + (autoRefreshOn ? ' active' : '');
 }
 
@@ -761,8 +761,8 @@ async function refreshStatus() {
 
   document.getElementById('statUptime').textContent = data.uptime;
   document.getElementById('statVersion').textContent = 'v' + data.version;
-  document.getElementById('statActive').textContent = 'Active: ' + (data.activeRequests || 0);
-  document.getElementById('statusAuto').textContent = data.autoContinue ? 'ON' : 'OFF';
+  document.getElementById('statActive').textContent = '活跃: ' + (data.activeRequests || 0);
+  document.getElementById('statusAuto').textContent = data.autoContinue ? '开' : '关';
   document.getElementById('statusMaxContinue').textContent = data.maxContinues || 5;
   document.getElementById('statusPort').textContent = data.port || '-';
   document.getElementById('statusWorkspace').textContent = data.workspaceDir || '-';
@@ -777,7 +777,7 @@ async function refreshSessions() {
   const activeList = document.getElementById('activeList');
   const activePanel = document.getElementById('activePanel');
   if (data.activeRequests.length === 0) {
-    activeList.innerHTML = '<div class="empty">No active streaming requests</div>';
+    activeList.innerHTML = '<div class="empty">暂无活跃的流式请求</div>';
     activePanel.style.display = 'block';
   } else {
     activePanel.style.display = 'block';
@@ -790,22 +790,22 @@ async function refreshSessions() {
         queueHtml = `<span class="queue-badge">已排队 ${formatDuration(r.queueTiming)}</span>`;
       }
       return `
-      <div class="active-item" style="cursor:pointer" onclick="viewActiveLog('${r.id}')" title="Click for live details">
+      <div class="active-item" style="cursor:pointer" onclick="viewActiveLog('${r.id}')" title="点击查看实时详情">
         <span><span class="spinner" style="display:inline-block;vertical-align:middle;margin-right:8px"></span>${r.id}</span>
         <span style="color:var(--text-muted)">${r.workspace || 'default'}</span>
         <span style="color:var(--text-muted)">${r.type}</span>
         ${queueHtml}
         <span>${formatDuration(r.elapsed_ms)}</span>
-        <span>${r.chunkCount} chunks</span>
+        <span>${r.chunkCount} 个分片</span>
       </div>`;
     }).join('');
   }
-  document.getElementById('activeCount').textContent = data.activeRequests.length + ' streaming';
+  document.getElementById('activeCount').textContent = data.activeRequests.length + ' 个流式请求';
 
   workspaces = data.workspaces || [];
   const wsFilter = document.getElementById('wsFilter');
   const currentValue = wsFilter.value;
-  wsFilter.innerHTML = '<option value="">All Workspaces</option>' +
+  wsFilter.innerHTML = '<option value="">全部工作区</option>' +
     workspaces.map(w => `<option value="${w.workspace}">${w.workspace} (${w.totalRequests})</option>`).join('');
   wsFilter.value = currentValue;
 }
@@ -817,7 +817,7 @@ async function refreshRequests() {
 
   const tbody = document.getElementById('requestTable');
   if (data.requests.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty">No requests recorded</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="empty">暂无请求记录</td></tr>';
   } else {
     tbody.innerHTML = data.requests.map(r => {
       const time = r.timestamp ? new Date(r.timestamp).toLocaleTimeString() : '-';
@@ -826,7 +826,7 @@ async function refreshRequests() {
       if (r.type === 'llmUtilsChat') typeBadge = 'blue badge';
       else if (r.type === 'chatCompletion') typeBadge = 'green badge';
       else typeBadge = 'yellow badge';
-      return `<tr onclick="viewLog('${r.timestamp?.substring(0,10) || ''}', '${r.workspace || 'default'}', '${r.id}', '${r.type}')" style="cursor:pointer" title="Click for details">
+      return `<tr onclick="viewLog('${r.timestamp?.substring(0,10) || ''}', '${r.workspace || 'default'}', '${r.id}', '${r.type}')" style="cursor:pointer" title="点击查看详情">
         <td>${time}</td>
         <td style="font-size:11px;color:var(--accent)">${r.id}</td>
         <td>${r.workspace || 'default'}</td>
@@ -838,7 +838,7 @@ async function refreshRequests() {
       </tr>`;
     }).join('');
   }
-  document.getElementById('requestCount').textContent = data.requests.length + ' requests';
+  document.getElementById('requestCount').textContent = data.requests.length + ' 条请求';
 
   document.getElementById('statRequests').textContent = data.requests.length;
   if (data.requests.length > 0) {
@@ -850,9 +850,9 @@ async function refreshRequests() {
       totalDuration += r.duration_ms || 0;
     }
     document.getElementById('statTokens').textContent = formatTokens(totalTokens);
-    document.getElementById('statTokensDetail').textContent = `In: ${formatTokens(totalPrompt)} / Out: ${formatTokens(totalCompletion)}`;
+    document.getElementById('statTokensDetail').textContent = `输入: ${formatTokens(totalPrompt)} / 输出: ${formatTokens(totalCompletion)}`;
     document.getElementById('statDuration').textContent = formatDuration(Math.round(totalDuration / data.requests.length));
-    document.getElementById('statTotalDuration').textContent = 'Total: ' + formatDuration(totalDuration);
+    document.getElementById('statTotalDuration').textContent = '总计: ' + formatDuration(totalDuration);
   }
 }
 
@@ -887,7 +887,7 @@ async function refreshStats() {
       data: {
         labels: newLabels,
         datasets: [{
-          label: 'Tokens',
+          label: 'Token',
           data: newTokens,
           borderColor: '#58a6ff',
           backgroundColor: 'rgba(88,166,255,0.1)',
@@ -945,7 +945,7 @@ async function refreshStats() {
         animation: false,
         plugins: {
           legend: { position: 'bottom', labels: { color: tickColor, font: { size: 11 }, padding: 16 } },
-          tooltip: { callbacks: { label: ctx => `${ctx.label}: ${formatTokens(ctx.raw)} tokens` } }
+          tooltip: { callbacks: { label: ctx => `${ctx.label}: ${formatTokens(ctx.raw)} 个 Token` } }
         }
       }
     });
@@ -969,7 +969,7 @@ function startLiveModalPoll() {
       const overviewEl = document.getElementById('tab-overview');
       if (overviewEl) {
         const liveBadge = overviewEl.querySelector('.live-badge');
-        if (liveBadge) liveBadge.outerHTML = '<span class="badge green" style="font-size:11px">Completed</span>';
+        if (liveBadge) liveBadge.outerHTML = '<span class="badge green" style="font-size:11px">已完成</span>';
       }
       return;
     }
@@ -989,7 +989,7 @@ function updateLiveModalContent(data) {
     const durationEl = overviewEl.querySelector('[data-field="duration"]');
     if (durationEl) durationEl.textContent = formatDuration(resp.duration_ms);
     const contentLenEl = overviewEl.querySelector('[data-field="contentLen"]');
-    if (contentLenEl) contentLenEl.textContent = (resp.fullContent || '').length.toLocaleString() + ' chars';
+    if (contentLenEl) contentLenEl.textContent = (resp.fullContent || '').length.toLocaleString() + ' 字符';
     const chunksEl = overviewEl.querySelector('[data-field="chunks"]');
     if (chunksEl) chunksEl.textContent = (resp.chunkCount || 0).toLocaleString();
     const queueEl = overviewEl.querySelector('[data-field="queue"]');
@@ -999,7 +999,7 @@ function updateLiveModalContent(data) {
   if (responseEl && activeModalTab === 'response') {
     const contentPre = responseEl.querySelector('[data-field="liveContent"]');
     if (contentPre) {
-      const newContent = (resp.fullContent || '(empty)').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const newContent = (resp.fullContent || '（空）').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       if (contentPre.getAttribute('data-len') !== String((resp.fullContent || '').length)) {
         contentPre.innerHTML = newContent.substring(0, 50000);
         contentPre.setAttribute('data-len', String((resp.fullContent || '').length));
@@ -1031,8 +1031,8 @@ async function viewLog(date, workspace, id, type) {
   document.getElementById('modalIdBadge').textContent = id;
   
   switchModalTab('overview');
-  document.querySelectorAll('.modal-tab-content').forEach(c => c.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px">Loading...</p>');
-  
+  document.querySelectorAll('.modal-tab-content').forEach(c => c.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px">加载中...</p>');
+
   modal.classList.add('show');
   document.body.style.overflow = 'hidden';
 
@@ -1048,7 +1048,7 @@ async function viewLog(date, workspace, id, type) {
     currentModalLogId = null;
     const data = await apiCall(`/v1/dashboard/log/${date}/${workspace}/${id}-${type}`);
     if (!data) {
-      document.getElementById('tab-overview').innerHTML = '<p style="color:var(--red);text-align:center;padding:40px">Failed to load log</p>';
+      document.getElementById('tab-overview').innerHTML = '<p style="color:var(--red);text-align:center;padding:40px">日志加载失败</p>';
       return;
     }
     currentModalData = data;
@@ -1061,7 +1061,7 @@ async function viewActiveLog(id) {
   document.getElementById('modalIdBadge').textContent = id;
   
   switchModalTab('overview');
-  document.querySelectorAll('.modal-tab-content').forEach(c => c.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px">Loading...</p>');
+  document.querySelectorAll('.modal-tab-content').forEach(c => c.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px">加载中...</p>');
   
   modal.classList.add('show');
   document.body.style.overflow = 'hidden';
@@ -1076,7 +1076,7 @@ async function viewActiveLog(id) {
   } else {
     currentModalIsLive = false;
     currentModalLogId = null;
-    document.getElementById('tab-overview').innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:40px">Request completed or not found</p>';
+    document.getElementById('tab-overview').innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:40px">请求已完成或未找到</p>';
   }
 }
 
@@ -1101,74 +1101,74 @@ function populateModal(data) {
   const totalTks = getToken(tu, 'total_tokens');
   const calcTotal = promptTks + completionTks;
 
-  const liveBadge = isLive ? '<span class="live-badge" style="display:inline-flex;align-items:center;gap:4px;background:var(--red);color:#fff;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600;margin-bottom:12px"><span style="width:6px;height:6px;border-radius:50%;background:#fff;animation:livePulse 1s infinite"></span> LIVE STREAMING</span>' : '';
+  const liveBadge = isLive ? '<span class="live-badge" style="display:inline-flex;align-items:center;gap:4px;background:var(--red);color:#fff;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600;margin-bottom:12px"><span style="width:6px;height:6px;border-radius:50%;background:#fff;animation:livePulse 1s infinite"></span> 实时流式输出中</span>' : '';
 
   document.getElementById('tab-overview').innerHTML = `
     ${liveBadge}
     <div class="modal-grid">
       <div class="modal-field">
-        <div class="f-label">Request ID</div>
+        <div class="f-label">请求 ID</div>
         <div class="f-value mono">${data.id || '-'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Workspace</div>
+        <div class="f-label">工作区</div>
         <div class="f-value">${data.workspace || 'default'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Timestamp</div>
+        <div class="f-label">时间</div>
         <div class="f-value">${data.timestamp ? new Date(data.timestamp).toLocaleString('zh-CN') : '-'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Type</div>
+        <div class="f-label">类型</div>
         <div class="f-value">${data.type || '-'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Model</div>
+        <div class="f-label">模型</div>
         <div class="f-value">${body.model || body.function || 'auto'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Status</div>
-        <div class="f-value" style="color:${resp.status >= 200 && resp.status < 300 ? 'var(--green)' : 'var(--red)'}">${resp.status || (isLive ? 'Streaming...' : '-')}</div>
+        <div class="f-label">状态</div>
+        <div class="f-value" style="color:${resp.status >= 200 && resp.status < 300 ? 'var(--green)' : 'var(--red)'}">${resp.status || (isLive ? '流式输出中...' : '-')}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Duration</div>
+        <div class="f-label">耗时</div>
         <div class="f-value" data-field="duration">${formatDuration(resp.duration_ms)}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Content Length</div>
-        <div class="f-value" data-field="contentLen">${(resp.fullContent || '').length.toLocaleString()} chars</div>
+        <div class="f-label">内容长度</div>
+        <div class="f-value" data-field="contentLen">${(resp.fullContent || '').length.toLocaleString()} 字符</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">SSE Chunks</div>
+        <div class="f-label">SSE 分片</div>
         <div class="f-value" data-field="chunks">${(resp.chunkCount || (resp.chunks || []).length).toLocaleString()}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Queue Position</div>
+        <div class="f-label">排队位置</div>
         <div class="f-value" data-field="queue">${resp.queuePosition > 0 ? '#' + resp.queuePosition : '-'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Request URL</div>
+        <div class="f-label">请求 URL</div>
         <div class="f-value mono" style="font-size:11px">${(req.url || '-').substring(0, 80)}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Messages</div>
-        <div class="f-value">${(body.messages || []).length} messages</div>
+        <div class="f-label">消息数</div>
+        <div class="f-value">${(body.messages || []).length} 条消息</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Stream</div>
-        <div class="f-value">${body.stream !== false ? 'Yes' : 'No'}</div>
+        <div class="f-label">流式</div>
+        <div class="f-value">${body.stream !== false ? '是' : '否'}</div>
       </div>
     </div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
-      <span class="token-badge in">&#9660; Input: ${formatTokens(promptTks)}</span>
-      <span class="token-badge out">&#9650; Output: ${formatTokens(completionTks)}</span>
-      <span class="token-badge total">&#9311; Total: ${formatTokens(totalTks || calcTotal)}</span>
+      <span class="token-badge in">&#9660; 输入: ${formatTokens(promptTks)}</span>
+      <span class="token-badge out">&#9650; 输出: ${formatTokens(completionTks)}</span>
+      <span class="token-badge total">&#9311; 总计: ${formatTokens(totalTks || calcTotal)}</span>
     </div>
   `;
 
   const messagesPreview = (body.messages || []).map(m => ({
     role: m.role,
-    content: typeof m.content === 'string' ? (m.content.length > 300 ? m.content.substring(0, 300) + '...' : m.content) : '[complex content]'
+    content: typeof m.content === 'string' ? (m.content.length > 300 ? m.content.substring(0, 300) + '...' : m.content) : '[复杂内容]'
   }));
   document.getElementById('tab-request').innerHTML = `
     <div class="modal-grid" style="margin-bottom:16px">
@@ -1177,55 +1177,55 @@ function populateModal(data) {
         <div class="f-value mono" style="font-size:11px">${(req.url || '-')}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Method</div>
+        <div class="f-label">方法</div>
         <div class="f-value">${req.method || 'POST'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Model</div>
+        <div class="f-label">模型</div>
         <div class="f-value">${body.model || body.function || 'auto'}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Messages</div>
+        <div class="f-label">消息数</div>
         <div class="f-value">${(body.messages || []).length}</div>
       </div>
     </div>
-    <div class="section-title">Messages</div>
+    <div class="section-title">消息列表</div>
     <pre>${JSON.stringify(messagesPreview, null, 2).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
-    <div class="section-title">Request Headers</div>
+    <div class="section-title">请求头</div>
     <pre>${JSON.stringify(req.headers || {}, null, 2).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
   `;
 
   document.getElementById('tab-response').innerHTML = `
     <div class="modal-grid" style="margin-bottom:16px">
       <div class="modal-field">
-        <div class="f-label">Status</div>
-        <div class="f-value" style="color:${resp.status >= 200 && resp.status < 300 ? 'var(--green)' : 'var(--red)'}">${resp.status || (isLive ? 'Streaming...' : '-')}</div>
+        <div class="f-label">状态</div>
+        <div class="f-value" style="color:${resp.status >= 200 && resp.status < 300 ? 'var(--green)' : 'var(--red)'}">${resp.status || (isLive ? '流式输出中...' : '-')}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Duration</div>
+        <div class="f-label">耗时</div>
         <div class="f-value" data-field="duration">${formatDuration(resp.duration_ms)}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">Content Length</div>
+        <div class="f-label">内容长度</div>
         <div class="f-value" data-field="contentLen">${(resp.fullContent || '').length.toLocaleString()}</div>
       </div>
       <div class="modal-field">
-        <div class="f-label">SSE Chunks</div>
+        <div class="f-label">SSE 分片</div>
         <div class="f-value" data-field="chunks">${(resp.chunkCount || (resp.chunks || []).length).toLocaleString()}</div>
       </div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-      <span class="token-badge in">Input: ${formatTokens(promptTks)}</span>
-      <span class="token-badge out">Output: ${formatTokens(completionTks)}</span>
-      <span class="token-badge total">Total: ${formatTokens(totalTks || calcTotal)}</span>
+      <span class="token-badge in">输入: ${formatTokens(promptTks)}</span>
+      <span class="token-badge out">输出: ${formatTokens(completionTks)}</span>
+      <span class="token-badge total">总计: ${formatTokens(totalTks || calcTotal)}</span>
     </div>
-    ${resp.fullReasoning ? `<div class="section-title">Reasoning</div><pre data-field="liveReasoning" data-len="${resp.fullReasoning.length}">${resp.fullReasoning.replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0, 10000)}</pre>` : ''}
-    <div class="section-title">Full Content</div>
-    <pre data-field="liveContent" data-len="${(resp.fullContent || '').length}">${(resp.fullContent || '(empty)').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0, 50000)}</pre>
+    ${resp.fullReasoning ? `<div class="section-title">思考过程</div><pre data-field="liveReasoning" data-len="${resp.fullReasoning.length}">${resp.fullReasoning.replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0, 10000)}</pre>` : ''}
+    <div class="section-title">完整内容</div>
+    <pre data-field="liveContent" data-len="${(resp.fullContent || '').length}">${(resp.fullContent || '（空）').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0, 50000)}</pre>
   `;
 
   const sanitized = JSON.stringify(data, (key, value) => {
-    if (typeof value === 'string' && value.length > 2000) return value.substring(0, 2000) + '...[TRUNCATED]';
+    if (typeof value === 'string' && value.length > 2000) return value.substring(0, 2000) + '...[已截断]';
     return value;
   }, 2);
   document.getElementById('tab-raw').innerHTML = `<pre style="max-height:55vh">${sanitized.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>`;
@@ -1330,11 +1330,11 @@ function toggleFallbackAuto() {
   const isOn = toggle.classList.contains('on');
   if (isOn) {
     toggle.classList.remove('on');
-    label.textContent = 'OFF';
+    label.textContent = '关';
     label.style.color = 'var(--text-dim)';
   } else {
     toggle.classList.add('on');
-    label.textContent = 'ON';
+    label.textContent = '开';
     label.style.color = 'var(--green)';
   }
 }
@@ -1351,11 +1351,11 @@ async function loadFallbackConfigUI() {
   const label = document.getElementById('fbAutoLabel');
   if (fbConfig.autoFallback) {
     toggle.classList.add('on');
-    label.textContent = 'ON';
+    label.textContent = '开';
     label.style.color = 'var(--green)';
   } else {
     toggle.classList.remove('on');
-    label.textContent = 'OFF';
+    label.textContent = '关';
     label.style.color = 'var(--text-dim)';
   }
   document.getElementById('fbThreshold').value = fbConfig.queueThreshold || 500;
@@ -1404,7 +1404,7 @@ function renderFallbackMappings(mappings) {
           ${chain.length === 0 ? '<span style="font-size:12px;color:var(--text-dim)">无降级模型</span>' : ''}
         </div>
         <div>
-          ${chain.length > 0 ? `<button class="fb-btn fb-btn-secondary" style="padding:3px 10px;font-size:11px" onclick="fbClearFallback('${claudeModel}')">Clear</button>` : ''}
+          ${chain.length > 0 ? `<button class="fb-btn fb-btn-secondary" style="padding:3px 10px;font-size:11px" onclick="fbClearFallback('${claudeModel}')">清空</button>` : ''}
         </div>
       </div>`;
   }
@@ -1443,7 +1443,7 @@ async function saveFallbackConfigUI() {
   const config = { autoFallback, queueThreshold, mappings };
 
   const statusEl = document.getElementById('fbSaveStatus');
-  statusEl.textContent = 'Saving...';
+  statusEl.textContent = '保存中...';
   statusEl.style.color = 'var(--yellow)';
 
   try {
@@ -1456,16 +1456,16 @@ async function saveFallbackConfigUI() {
     });
     const result = await r.json();
     if (r.ok && result.ok) {
-      statusEl.textContent = 'Saved successfully!';
+      statusEl.textContent = '保存成功！';
       statusEl.style.color = 'var(--green)';
       fbConfig = result.config || config;
       setTimeout(() => { statusEl.textContent = ''; }, 3000);
     } else {
-      statusEl.textContent = 'Error: ' + (result.error || 'Unknown error');
+      statusEl.textContent = '错误: ' + (result.error || '未知错误');
       statusEl.style.color = 'var(--red)';
     }
   } catch (e) {
-    statusEl.textContent = 'Error: ' + e.message;
+    statusEl.textContent = '错误: ' + e.message;
     statusEl.style.color = 'var(--red)';
   }
 }
@@ -1518,7 +1518,7 @@ function renderModelConfig(models) {
     html += `<div class="mc-category-section">`;
     html += `<div class="mc-category-header">&#128193; ${escHtml(cat)} <span class="mc-category-count">${items.length}</span></div>`;
     html += `<table class="mc-table"><thead><tr>
-      <th>Model Key</th><th>config_name</th><th>function</th><th>toolcall_compatible</th><th style="width:120px">Actions</th>
+      <th>模型 Key</th><th>config_name</th><th>function</th><th>toolcall_compatible</th><th style="width:120px">操作</th>
     </tr></thead><tbody>`;
 
     for (const item of items) {
@@ -1534,8 +1534,8 @@ function renderModelConfig(models) {
         <td>${escHtml(item.function || '-')}</td>
         <td>${tcHtml}</td>
         <td>
-          <button class="mc-action-btn" onclick="mcShowEditForm('${escAttr(item.key)}')">Edit</button>
-          <button class="mc-action-btn mc-del" onclick="mcDeleteModel('${escAttr(item.key)}')">Del</button>
+          <button class="mc-action-btn" onclick="mcShowEditForm('${escAttr(item.key)}')">编辑</button>
+          <button class="mc-action-btn mc-del" onclick="mcDeleteModel('${escAttr(item.key)}')">删除</button>
         </td>
       </tr>`;
     }
@@ -1558,7 +1558,7 @@ function escAttr(s) {
 function mcShowAddForm() {
   mcEditingKey = null;
   document.getElementById('mcFormTitle').innerHTML = '&#43; 添加模型';
-  document.getElementById('mcFormSubmitBtn').textContent = 'Add';
+  document.getElementById('mcFormSubmitBtn').textContent = '添加';
   document.getElementById('mcFormKey').value = '';
   document.getElementById('mcFormKey').disabled = false;
   document.getElementById('mcFormConfigName').value = '';
@@ -1573,7 +1573,7 @@ function mcShowEditForm(key) {
   mcEditingKey = key;
   const cfg = mcConfig.models[key];
   document.getElementById('mcFormTitle').innerHTML = '&#9998; 编辑模型';
-  document.getElementById('mcFormSubmitBtn').textContent = 'Update';
+  document.getElementById('mcFormSubmitBtn').textContent = '更新';
   document.getElementById('mcFormKey').value = key;
   document.getElementById('mcFormKey').disabled = true;
   document.getElementById('mcFormConfigName').value = cfg.config_name || '';
@@ -1605,7 +1605,7 @@ async function mcSubmitForm() {
 
   const isEdit = mcEditingKey !== null;
   const statusEl = document.getElementById('mcSaveStatus');
-  statusEl.textContent = isEdit ? 'Updating...' : 'Adding...';
+  statusEl.textContent = isEdit ? '更新中...' : '添加中...';
   statusEl.style.color = 'var(--yellow)';
 
   try {
@@ -1618,17 +1618,17 @@ async function mcSubmitForm() {
     });
     const result = await r.json();
     if (r.ok && result.ok) {
-      statusEl.textContent = isEdit ? 'Updated!' : 'Added!';
+      statusEl.textContent = isEdit ? '更新成功！' : '添加成功！';
       statusEl.style.color = 'var(--green)';
       mcCloseForm();
       await loadModelConfigUI();
       setTimeout(() => { statusEl.textContent = ''; }, 3000);
     } else {
-      statusEl.textContent = 'Error: ' + (result.error || 'Unknown error');
+      statusEl.textContent = '错误: ' + (result.error || '未知错误');
       statusEl.style.color = 'var(--red)';
     }
   } catch (e) {
-    statusEl.textContent = 'Error: ' + e.message;
+    statusEl.textContent = '错误: ' + e.message;
     statusEl.style.color = 'var(--red)';
   }
 }
@@ -1637,7 +1637,7 @@ async function mcDeleteModel(key) {
   if (!confirm(`确定删除模型 "${key}" 吗？`)) return;
 
   const statusEl = document.getElementById('mcSaveStatus');
-  statusEl.textContent = 'Deleting...';
+  statusEl.textContent = '删除中...';
   statusEl.style.color = 'var(--yellow)';
 
   try {
@@ -1646,16 +1646,16 @@ async function mcDeleteModel(key) {
     const r = await fetch(url, { method: 'DELETE' });
     const result = await r.json();
     if (r.ok && result.ok) {
-      statusEl.textContent = 'Deleted!';
+      statusEl.textContent = '删除成功！';
       statusEl.style.color = 'var(--green)';
       await loadModelConfigUI();
       setTimeout(() => { statusEl.textContent = ''; }, 3000);
     } else {
-      statusEl.textContent = 'Error: ' + (result.error || 'Unknown error');
+      statusEl.textContent = '错误: ' + (result.error || '未知错误');
       statusEl.style.color = 'var(--red)';
     }
   } catch (e) {
-    statusEl.textContent = 'Error: ' + e.message;
+    statusEl.textContent = '错误: ' + e.message;
     statusEl.style.color = 'var(--red)';
   }
 }
@@ -1664,7 +1664,7 @@ async function saveModelConfigUI() {
   if (!mcConfig) return;
 
   const statusEl = document.getElementById('mcSaveStatus');
-  statusEl.textContent = 'Saving all...';
+  statusEl.textContent = '正在保存全部...';
   statusEl.style.color = 'var(--yellow)';
 
   try {
@@ -1677,16 +1677,16 @@ async function saveModelConfigUI() {
     });
     const result = await r.json();
     if (r.ok && result.ok) {
-      statusEl.textContent = 'All saved successfully!';
+      statusEl.textContent = '全部保存成功！';
       statusEl.style.color = 'var(--green)';
       mcConfig = result.config || mcConfig;
       setTimeout(() => { statusEl.textContent = ''; }, 3000);
     } else {
-      statusEl.textContent = 'Error: ' + (result.error || 'Unknown error');
+      statusEl.textContent = '错误: ' + (result.error || '未知错误');
       statusEl.style.color = 'var(--red)';
     }
   } catch (e) {
-    statusEl.textContent = 'Error: ' + e.message;
+    statusEl.textContent = '错误: ' + e.message;
     statusEl.style.color = 'var(--red)';
   }
 }

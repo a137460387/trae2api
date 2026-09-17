@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trae API Studio</title>
+<title>Trae API 工作台</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <!-- Phase 5: Markdown + code highlight + sanitization (CDN with SRI) -->
@@ -255,75 +255,75 @@ a{color:var(--accent-1);text-decoration:none}
   <!-- Phase 10: ☰ Menu overlay -->
   <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
   <div class="menu-panel" id="menuPanel" style="display:none">
-    <div style="padding:12px 20px 8px;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px">Navigation</div>
+    <div style="padding:12px 20px 8px;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px">导航</div>
     <div class="menu-item active" data-menu="chat" onclick="openMenuTab('chat')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      Chat
+      对话
     </div>
     <div class="menu-item" data-menu="api" onclick="openMenuTab('api')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      API Tester
+      API 测试
     </div>
     <div class="menu-item" data-menu="agent" onclick="openMenuTab('agent')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      Agent
+      智能体
     </div>
     <div class="menu-divider"></div>
     <div class="menu-item" data-menu="files" onclick="openMenuTab('files')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Files
+      文件
     </div>
   </div>
 
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <h2>Sessions</h2>
-      <button class="btn btn-ghost btn-sm" onclick="createSession()" title="New Session">+ New</button>
+      <h2>会话</h2>
+      <button class="btn btn-ghost btn-sm" onclick="createSession()" title="新建会话">+ 新建</button>
     </div>
     <div style="padding:4px 8px">
-      <input type="text" id="sessionSearch" placeholder="Search sessions..." oninput="filterSessions(this.value)" style="width:100%;padding:5px 8px;background:var(--bg-2);border:1px solid var(--border-0);border-radius:var(--radius-sm);color:var(--text-0);font-size:12px">
+      <input type="text" id="sessionSearch" placeholder="搜索会话..." oninput="filterSessions(this.value)" style="width:100%;padding:5px 8px;background:var(--bg-2);border:1px solid var(--border-0);border-radius:var(--radius-sm);color:var(--text-0);font-size:12px">
     </div>
     <div class="sidebar-body" id="sessionList"></div>
     <div class="divider"></div>
     <div class="sidebar-header">
-      <h2>History</h2>
-      <button class="btn btn-ghost btn-sm" onclick="clearHistory()" title="Clear">Clear</button>
+      <h2>历史</h2>
+      <button class="btn btn-ghost btn-sm" onclick="clearHistory()" title="清空">清空</button>
     </div>
     <div class="sidebar-body" id="historyList"></div>
     <div class="sidebar-footer">
       <div style="display:flex;align-items:center;gap:6px">
         <span class="status-dot" id="statusDot"></span>
-        <span class="status-text" id="statusText">Connecting...</span>
+        <span class="status-text" id="statusText">连接中...</span>
       </div>
     </div>
   </aside>
 
   <div class="main">
     <div class="main-header">
-      <button class="toggle-sidebar" onclick="openMenu()" title="Menu" id="menuBtn">
+      <button class="toggle-sidebar" onclick="openMenu()" title="菜单" id="menuBtn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
-      <button class="toggle-sidebar" onclick="toggleSidebar()" title="Toggle Sidebar">
+      <button class="toggle-sidebar" onclick="toggleSidebar()" title="切换侧栏">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" fill="none"/><path d="M9 3v18"/></svg>
       </button>
-      <span class="brand">Trae API Studio</span>
+      <span class="brand">Trae API 工作台</span>
       <span class="badge badge-purple" id="editionBadge"></span>
-      <span class="badge badge-green" id="autoContinueBadge" style="display:none">Auto-Continue</span>
+      <span class="badge badge-green" id="autoContinueBadge" style="display:none">自动继续</span>
       <span style="flex:1"></span>
       <span class="status-text" id="modelInfo"></span>
-      <button class="btn btn-ghost btn-sm" onclick="checkStatus()" title="Refresh Status">
+      <button class="btn btn-ghost btn-sm" onclick="checkStatus()" title="刷新状态">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
       </button>
-      <button class="btn btn-ghost btn-sm" onclick="toggleConfig()" title="Toggle Config">
+      <button class="btn btn-ghost btn-sm" onclick="toggleConfig()" title="切换配置面板">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
       </button>
     </div>
 
     <div class="tabs" id="mainTabs">
-      <div class="tab active" data-tab="chat" onclick="switchMainTab('chat')">Chat</div>
+      <div class="tab active" data-tab="chat" onclick="switchMainTab('chat')">对话</div>
       <div class="tab" data-tab="api" onclick="switchMainTab('api')">API</div>
-      <div class="tab" data-tab="agent" onclick="switchMainTab('agent')">Agent</div>
-      <div class="tab" data-tab="files" onclick="switchMainTab('files')">Files</div>
+      <div class="tab" data-tab="agent" onclick="switchMainTab('agent')">智能体</div>
+      <div class="tab" data-tab="files" onclick="switchMainTab('files')">文件</div>
     </div>
 
     <div class="content-area">
@@ -333,15 +333,15 @@ a{color:var(--accent-1);text-decoration:none}
             <div class="chat-messages" id="chatMessages">
               <div class="empty-state">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                <p>Start a conversation with the AI. Select a model and type your message below.</p>
+                <p>与 AI 开始对话。选择一个模型，然后在下方输入你的消息。</p>
               </div>
             </div>
             <div class="chat-input-area">
-              <textarea class="chat-input" id="chatInput" placeholder="Type your message... (Enter to send, Shift+Enter for new line)" rows="1"></textarea>
+              <textarea class="chat-input" id="chatInput" placeholder="输入你的消息...（Enter 发送，Shift+Enter 换行）" rows="1"></textarea>
               <button class="btn btn-primary" id="chatSendBtn" onclick="sendChat()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
               </button>
-              <button class="btn btn-danger btn-icon" id="chatStopBtn" onclick="stopChat()" style="display:none" title="Stop">
+              <button class="btn btn-danger btn-icon" id="chatStopBtn" onclick="stopChat()" style="display:none" title="停止">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
               </button>
             </div>
@@ -357,13 +357,13 @@ a{color:var(--accent-1);text-decoration:none}
               <option value="DELETE">DELETE</option>
             </select>
             <input class="url-input" id="apiUrl" placeholder="https://localhost:19950/v1/chat/completions" value="/v1/chat/completions">
-            <button class="btn btn-success" onclick="sendApiRequest()">Send</button>
-            <button class="btn btn-ghost btn-sm" onclick="clearApiRequest()">Clear</button>
+            <button class="btn btn-success" onclick="sendApiRequest()">发送</button>
+            <button class="btn btn-ghost btn-sm" onclick="clearApiRequest()">清空</button>
           </div>
           <div class="tabs" id="apiTabs">
-            <div class="tab active" data-tab="api-body" onclick="switchApiTab('api-body')">Body</div>
-            <div class="tab" data-tab="api-headers" onclick="switchApiTab('api-headers')">Headers</div>
-            <div class="tab" data-tab="api-params" onclick="switchApiTab('api-params')">Params</div>
+            <div class="tab active" data-tab="api-body" onclick="switchApiTab('api-body')">请求体</div>
+            <div class="tab" data-tab="api-headers" onclick="switchApiTab('api-headers')">请求头</div>
+            <div class="tab" data-tab="api-params" onclick="switchApiTab('api-params')">参数</div>
           </div>
           <div style="flex:1;overflow:auto;padding:12px">
             <div class="tab-content active" id="tab-api-body">
@@ -377,11 +377,11 @@ a{color:var(--accent-1);text-decoration:none}
             </div>
             <div class="tab-content" id="tab-api-headers">
               <div class="key-value-editor" id="apiHeadersEditor"></div>
-              <button class="btn btn-ghost btn-sm" onclick="addKvRow('apiHeadersEditor')" style="margin-top:8px">+ Add Header</button>
+              <button class="btn btn-ghost btn-sm" onclick="addKvRow('apiHeadersEditor')" style="margin-top:8px">+ 添加请求头</button>
             </div>
             <div class="tab-content" id="tab-api-params">
               <div class="key-value-editor" id="apiParamsEditor"></div>
-              <button class="btn btn-ghost btn-sm" onclick="addKvRow('apiParamsEditor')" style="margin-top:8px">+ Add Param</button>
+              <button class="btn btn-ghost btn-sm" onclick="addKvRow('apiParamsEditor')" style="margin-top:8px">+ 添加参数</button>
             </div>
           </div>
           <div class="response-area" style="border-top:1px solid var(--border-0);min-height:200px;max-height:40%">
@@ -390,11 +390,11 @@ a{color:var(--accent-1);text-decoration:none}
               <span class="resp-time" id="respTime"></span>
               <span class="resp-size" id="respSize"></span>
               <span style="flex:1"></span>
-              <button class="btn btn-ghost btn-sm" onclick="copyResponse()">Copy</button>
+              <button class="btn btn-ghost btn-sm" onclick="copyResponse()">复制</button>
             </div>
             <div class="response-body" id="responseBody">
               <div class="empty-state">
-                <p>Send a request to see the response here.</p>
+                <p>发送请求后在此查看响应。</p>
               </div>
             </div>
           </div>
@@ -405,15 +405,15 @@ a{color:var(--accent-1);text-decoration:none}
             <div class="chat-messages" id="agentMessages">
               <div class="empty-state">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                <p>Agent mode: AI will automatically call tools (read files, search internet, etc.) based on your request.</p>
+                <p>智能体模式：AI 将根据你的请求自动调用工具（读取文件、联网搜索等）。</p>
               </div>
             </div>
             <div class="chat-input-area">
-              <textarea class="chat-input" id="agentInput" placeholder="Ask the agent to do something... (e.g. 'Read package.json and summarize')" rows="1"></textarea>
+              <textarea class="chat-input" id="agentInput" placeholder="让智能体执行任务...（例如：读取 package.json 并总结）" rows="1"></textarea>
               <button class="btn btn-primary" id="agentSendBtn" onclick="sendAgent()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
               </button>
-              <button class="btn btn-danger btn-icon" id="agentStopBtn" onclick="stopAgent()" style="display:none" title="Stop">
+              <button class="btn btn-danger btn-icon" id="agentStopBtn" onclick="stopAgent()" style="display:none" title="停止">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
               </button>
             </div>
@@ -422,14 +422,14 @@ a{color:var(--accent-1);text-decoration:none}
 
         <div class="tab-content" id="tab-files">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-            <input class="url-input" id="filePathInput" placeholder="File path (relative to workspace)" style="flex:1">
-            <button class="btn btn-primary btn-sm" onclick="readFileContent()">Read</button>
-            <button class="btn btn-ghost btn-sm" onclick="listWorkspaceFiles()">List Files</button>
+            <input class="url-input" id="filePathInput" placeholder="文件路径（相对于工作区）" style="flex:1">
+            <button class="btn btn-primary btn-sm" onclick="readFileContent()">读取</button>
+            <button class="btn btn-ghost btn-sm" onclick="listWorkspaceFiles()">列出文件</button>
           </div>
           <div id="fileContent" style="flex:1;overflow:auto">
             <div class="empty-state">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <p>Enter a file path or click "List Files" to browse the workspace.</p>
+              <p>输入文件路径，或点击"列出文件"浏览工作区。</p>
             </div>
           </div>
         </div>
@@ -437,16 +437,16 @@ a{color:var(--accent-1);text-decoration:none}
 
       <div class="panel-right" id="configPanel">
         <div class="sidebar-header">
-          <h2>Config</h2>
+          <h2>配置</h2>
           <button class="btn btn-ghost btn-sm" onclick="toggleConfig()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
         </div>
         <div style="flex:1;overflow-y:auto">
           <div class="config-section">
-            <h3>Connection</h3>
+            <h3>连接</h3>
             <div class="config-field">
-              <label>API Base URL</label>
+              <label>API 基础地址</label>
               <input id="cfgApiBase" value="http://localhost:19950" placeholder="http://localhost:19950">
             </div>
             <div class="config-field">
@@ -457,17 +457,17 @@ a{color:var(--accent-1);text-decoration:none}
           <!-- Dynamic config sections rendered from server schema (Phase 3) -->
           <div id="dynamicConfigSections"></div>
           <div class="config-section">
-            <h3>Agent Tools</h3>
+            <h3>智能体工具</h3>
             <div id="toolTags" style="display:flex;flex-wrap:wrap;gap:4px"></div>
           </div>
           <div class="config-section">
-            <h3>Quick Actions</h3>
+            <h3>快捷操作</h3>
             <div style="display:flex;flex-wrap:wrap;gap:6px">
-              <button class="btn btn-ghost btn-sm" onclick="fetchModels()">Refresh Models</button>
-              <button class="btn btn-ghost btn-sm" onclick="fetchTools()">Refresh Tools</button>
-              <button class="btn btn-ghost btn-sm" onclick="checkStatus()">Check Status</button>
-              <button class="btn btn-ghost btn-sm" onclick="exportSession()">Export Session</button>
-              <button class="btn btn-ghost btn-sm" onclick="saveAsDefault()">Save as Default</button>
+              <button class="btn btn-ghost btn-sm" onclick="fetchModels()">刷新模型</button>
+              <button class="btn btn-ghost btn-sm" onclick="fetchTools()">刷新工具</button>
+              <button class="btn btn-ghost btn-sm" onclick="checkStatus()">检查状态</button>
+              <button class="btn btn-ghost btn-sm" onclick="exportSession()">导出会话</button>
+              <button class="btn btn-ghost btn-sm" onclick="saveAsDefault()">保存为默认</button>
             </div>
           </div>
         </div>
@@ -621,7 +621,7 @@ async function migrateOldLocalStorage() {
     for (const oldSess of oldSessions) {
       try {
         // Create session on server
-        const res = await apiPost('/v1/sessions', { name: oldSess.name || 'Migrated Session' });
+        const res = await apiPost('/v1/sessions', { name: oldSess.name || '迁移的会话' });
         if (!res || !res.id) {
           console.warn(`[migration] Failed to create session for ${oldSess.id}`);
           continue;
@@ -738,7 +738,7 @@ async function createSession(silent) {
   try {
     const res = await apiPost('/v1/sessions', {});
     if (res.status !== 200 || !res.body || !res.body.id) {
-      throw new Error('Server returned ' + res.status);
+      throw new Error('服务器返回 ' + res.status);
     }
     const session = res.body;
     state.sessions.push(session);
@@ -747,10 +747,10 @@ async function createSession(silent) {
     setMessagesFor(session.id, { chatMessages: [], agentMessages: [], history: [], workspaceDir: '', systemPrompt: '' });
     renderSessions();
     saveState();
-    if (!silent) toast('Session created', 'success');
+    if (!silent) toast('会话已创建', 'success');
   } catch (e) {
     console.error('[createSession] failed:', e);
-    toast('Failed to create session: ' + e.message, 'error');
+    toast('创建会话失败：' + e.message, 'error');
   }
 }
 
@@ -772,11 +772,11 @@ async function deleteSession(id) {
   try {
     const res = await apiDelete('/v1/sessions/' + encodeURIComponent(id));
     if (res.status !== 200) {
-      throw new Error('Server returned ' + res.status);
+      throw new Error('服务器返回 ' + res.status);
     }
   } catch (e) {
     console.error('[deleteSession] failed:', e);
-    toast('Failed to delete session: ' + e.message, 'error');
+    toast('删除会话失败：' + e.message, 'error');
     return;
   }
   state.sessions = state.sessions.filter(s => s.id !== id);
@@ -829,7 +829,7 @@ async function togglePin(id) {
       renderSessions();
     }
   } catch (e) {
-    toast('Failed to toggle pin: ' + e.message, 'error');
+    toast('置顶操作失败：' + e.message, 'error');
   }
 }
 
@@ -865,7 +865,7 @@ function startRenameSession(id, el) {
         renderSessions();
       }
     } catch (e) {
-      toast('Failed to rename: ' + e.message, 'error');
+      toast('重命名失败：' + e.message, 'error');
     }
   };
 
@@ -887,11 +887,11 @@ function confirmDeleteSession(id, name) {
   overlay.className = 'modal-overlay';
   overlay.innerHTML = `
     <div class="modal-box">
-      <h3>Delete Session</h3>
-      <p>Delete "${esc(name)}"? This cannot be undone.</p>
+      <h3>删除会话</h3>
+      <p>确定删除 "${esc(name)}" 吗？此操作无法撤销。</p>
       <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
-        <button class="btn btn-primary" style="background:var(--red-0)" onclick="this.closest('.modal-overlay').remove();deleteSession('${id}')">Delete</button>
+        <button class="btn btn-ghost" onclick="this.closest('.modal-overlay').remove()">取消</button>
+        <button class="btn btn-primary" style="background:var(--red-0)" onclick="this.closest('.modal-overlay').remove();deleteSession('${id}')">删除</button>
       </div>
     </div>
   `;
@@ -908,10 +908,10 @@ function renderSessions() {
   el.innerHTML = filtered.map(s => {
     const tIn = s.totalTokensIn || 0;
     const tOut = s.totalTokensOut || 0;
-    const tokenHtml = (tIn || tOut) ? `<span class="session-tokens" title="Σ in: ${tIn} / out: ${tOut}">Σ${tIn}/${tOut}</span>` : '';
+    const tokenHtml = (tIn || tOut) ? `<span class="session-tokens" title="Σ 输入: ${tIn} / 输出: ${tOut}">Σ${tIn}/${tOut}</span>` : '';
     return `
     <div class="session-item ${s.id === state.activeSessionId ? 'active' : ''}" onclick="handleSessionClick('${s.id}', event)">
-      ${s.pinned ? '<svg class="pin-icon pinned" width="12" height="12" viewBox="0 0 24 24" fill="var(--orange-0)" stroke="var(--orange-0)" stroke-width="2" onclick="event.stopPropagation();togglePin(\'' + s.id + '\')" title="Unpin"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' : '<svg class="pin-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="event.stopPropagation();togglePin(\'' + s.id + '\')" title="Pin"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'}
+      ${s.pinned ? '<svg class="pin-icon pinned" width="12" height="12" viewBox="0 0 24 24" fill="var(--orange-0)" stroke="var(--orange-0)" stroke-width="2" onclick="event.stopPropagation();togglePin(\'' + s.id + '\')" title="取消置顶"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' : '<svg class="pin-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="event.stopPropagation();togglePin(\'' + s.id + '\')" title="置顶"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'}
       <span class="session-name" ondblclick="event.stopPropagation();startRenameSession('${s.id}', this)">${esc(s.name)}</span>
       ${tokenHtml}
       <span class="session-close" onclick="event.stopPropagation();confirmDeleteSession('${s.id}', '${esc(s.name)}')">&times;</span>
@@ -923,7 +923,7 @@ function renderHistory() {
   const sess = getActiveSession();
   const el = document.getElementById('historyList');
   if (!sess || !sess.history || sess.history.length === 0) {
-    el.innerHTML = '<div style="padding:12px;color:var(--text-3);font-size:12px;text-align:center">No history yet</div>';
+    el.innerHTML = '<div style="padding:12px;color:var(--text-3);font-size:12px;text-align:center">暂无历史</div>';
     return;
   }
   el.innerHTML = sess.history.slice().reverse().map((h, i) => `
@@ -948,7 +948,7 @@ function loadHistoryItem(idx) {
   document.getElementById('apiUrl').value = h.url || '';
   if (h.body) document.getElementById('apiBody').value = typeof h.body === 'string' ? h.body : JSON.stringify(h.body, null, 2);
   switchMainTab('api');
-  toast('Request loaded from history');
+  toast('已从历史加载请求');
 }
 
 function addHistory(method, url, body, status, duration) {
@@ -965,7 +965,7 @@ function renderChatMessages() {
   const sess = getActiveSession();
   const el = document.getElementById('chatMessages');
   if (!sess || !sess.chatMessages || sess.chatMessages.length === 0) {
-    el.innerHTML = '<div class="empty-state"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><p>Start a conversation with the AI.</p></div>';
+    el.innerHTML = '<div class="empty-state"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><p>与 AI 开始对话。</p></div>';
     return;
   }
   el.innerHTML = sess.chatMessages.map((m, i) => renderMessage(m, i)).join('');
@@ -978,7 +978,7 @@ function renderAgentMessages() {
   const sess = getActiveSession();
   const el = document.getElementById('agentMessages');
   if (!sess || !sess.agentMessages || sess.agentMessages.length === 0) {
-    el.innerHTML = '<div class="empty-state"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><p>Agent mode: AI will automatically call tools based on your request.</p></div>';
+    el.innerHTML = '<div class="empty-state"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><p>智能体模式：AI 将根据你的请求自动调用工具。</p></div>';
     return;
   }
   el.innerHTML = sess.agentMessages.map(m => renderMessage(m)).join('');
@@ -1000,8 +1000,8 @@ async function startEditMessage(idx) {
   // If truncating more than 1 message (the user msg itself + assistant msg = 2), show confirm
   if (truncateCount > 2) {
     const confirmed = await showConfirmDialog(
-      'Edit Message',
-      `Discard ${truncateCount - 1} messages below this? This cannot be undone.`
+      '编辑消息',
+      `将丢弃此消息之后的 ${truncateCount - 1} 条消息，此操作无法撤销。确定继续吗？`
     );
     if (!confirmed) return;
   }
@@ -1038,11 +1038,11 @@ async function startEditMessage(idx) {
   btnRow.style.cssText = 'display:flex;gap:6px;margin-top:4px';
   const saveBtn = document.createElement('button');
   saveBtn.className = 'btn btn-primary';
-  saveBtn.textContent = 'Save & Resend';
+  saveBtn.textContent = '保存并重发';
   saveBtn.style.cssText = 'font-size:12px;padding:4px 12px';
   const cancelBtn = document.createElement('button');
   cancelBtn.className = 'btn btn-ghost';
-  cancelBtn.textContent = 'Cancel';
+  cancelBtn.textContent = '取消';
   cancelBtn.style.cssText = 'font-size:12px;padding:4px 12px';
 
   btnRow.appendChild(saveBtn);
@@ -1065,7 +1065,7 @@ async function startEditMessage(idx) {
       try {
         await apiDelete(`/v1/sessions/${sess.id}/messages/${msgId}`);
       } catch (e) {
-        toast('Failed to truncate messages: ' + e.message, 'error');
+        toast('截断消息失败：' + e.message, 'error');
         return;
       }
     }
@@ -1111,7 +1111,7 @@ async function regenerateMessage() {
     try {
       await apiDelete(`/v1/sessions/${sess.id}/messages/${lastMsg.id}`);
     } catch (e) {
-      toast('Failed to delete message: ' + e.message, 'error');
+      toast('删除消息失败：' + e.message, 'error');
       return;
     }
   }
@@ -1209,7 +1209,7 @@ async function sendChatWithMessages(messages) {
       }
     }
   } catch (e) {
-    sess.chatMessages[sess.chatMessages.length - 1].content = 'Error: ' + e.message;
+    sess.chatMessages[sess.chatMessages.length - 1].content = '错误：' + e.message;
     renderChatMessages();
   }
 
@@ -1226,8 +1226,8 @@ function showConfirmDialog(title, message) {
         <h3>${esc(title)}</h3>
         <p>${esc(message)}</p>
         <div class="modal-actions">
-          <button class="btn btn-ghost" id="_modalCancel">Cancel</button>
-          <button class="btn btn-primary" style="background:var(--red-0)" id="_modalConfirm">Confirm</button>
+          <button class="btn btn-ghost" id="_modalCancel">取消</button>
+          <button class="btn btn-primary" style="background:var(--red-0)" id="_modalConfirm">确认</button>
         </div>
       </div>
     `;
@@ -1240,7 +1240,7 @@ function showConfirmDialog(title, message) {
 
 function renderMessage(m, idx) {
   const cls = m.role === 'user' ? 'user' : m.role === 'tool' ? 'tool' : m.role === 'system' ? 'system' : 'assistant';
-  const roleLabel = m.role === 'user' ? 'You' : m.role === 'tool' ? 'Tool' : m.role === 'system' ? 'System' : 'AI';
+  const roleLabel = m.role === 'user' ? '你' : m.role === 'tool' ? '工具' : m.role === 'system' ? '系统' : 'AI';
   let content = m.content || '';
   if (cls === 'assistant' || cls === 'tool') {
     content = renderMarkdown(content);
@@ -1254,15 +1254,15 @@ function renderMessage(m, idx) {
   const isLast = sess && sess.chatMessages && idx === sess.chatMessages.length - 1;
 
   if (cls === 'user') {
-    actions = `<span class="msg-action" onclick="startEditMessage(${idx})" title="Edit">✏️</span>`;
+    actions = `<span class="msg-action" onclick="startEditMessage(${idx})" title="编辑">✏️</span>`;
   }
   if (cls === 'assistant' && isLast) {
-    actions = `<span class="msg-action" onclick="regenerateMessage()" title="Regenerate">🔄</span>`;
+    actions = `<span class="msg-action" onclick="regenerateMessage()" title="重新生成">🔄</span>`;
   }
 
   let tokenBadge = '';
   if (cls === 'assistant' && (m.tokensIn || m.tokensOut)) {
-    tokenBadge = `<span class="token-badge">in: ${m.tokensIn || 0} / out: ${m.tokensOut || 0}</span>`;
+    tokenBadge = `<span class="token-badge">输入: ${m.tokensIn || 0} / 输出: ${m.tokensOut || 0}</span>`;
   }
 
   return `<div class="chat-msg ${cls}" data-msg-idx="${idx}"><div class="msg-role">${roleLabel}${tokenBadge}${actions}</div>${content}</div>`;
@@ -1375,7 +1375,7 @@ function renderMarkdown(text) {
   // Wrap in md-body div for styling + add copy buttons to pre blocks
   html = '<div class="md-body">' + html + '</div>';
   // Add copy button to each <pre> block
-  html = html.replace(/<pre>/g, '<pre><button class="code-copy-btn" onclick="copyCodeBlock(this)">Copy</button>');
+  html = html.replace(/<pre>/g, '<pre><button class="code-copy-btn" onclick="copyCodeBlock(this)">复制</button>');
   // Mark math-containing elements for lazy KaTeX rendering
   if (hasMath) {
     html = html.replace('<div class="md-body">', '<div class="md-body" data-has-math="true">');
@@ -1389,8 +1389,8 @@ function copyCodeBlock(btn) {
   const code = pre.querySelector('code');
   const text = code ? code.textContent : pre.textContent;
   navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'Copied!';
-    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+    btn.textContent = '已复制';
+    setTimeout(() => { btn.textContent = '复制'; }, 1500);
   });
 }
 
@@ -1490,7 +1490,7 @@ async function sendChat() {
       const json = await resp.json();
       const content = json.choices?.[0]?.message?.content || '';
       const reasoning = json.choices?.[0]?.message?.reasoning_content || '';
-      sess.chatMessages.push({ role: 'assistant', content: (reasoning ? '[Thinking...]\n' + reasoning + '\n\n' : '') + content });
+      sess.chatMessages.push({ role: 'assistant', content: (reasoning ? '[思考中...]\n' + reasoning + '\n\n' : '') + content });
       renderChatMessages();
     }
 
@@ -1498,8 +1498,8 @@ async function sendChat() {
     addHistory('POST', '/v1/chat/completions', body, resp.status, duration);
   } catch (e) {
     if (e.name !== 'AbortError') {
-      toast('Chat error: ' + e.message, 'error');
-      sess.chatMessages.push({ role: 'system', content: 'Error: ' + e.message });
+      toast('对话错误：' + e.message, 'error');
+      sess.chatMessages.push({ role: 'system', content: '错误：' + e.message });
       renderChatMessages();
     }
   } finally {
@@ -1599,7 +1599,7 @@ async function sendAgent() {
               if (chunk.includes('[Calling tool:') || chunk.includes('[Tool ') || chunk.includes('[Agent Round')) {
                 const toolMatch = chunk.match(/\[Calling tool: (\w+)\.\.\.\]/);
                 if (toolMatch) {
-                  sess.agentMessages.push({ role: 'tool', content: 'Calling: ' + toolMatch[1] });
+                  sess.agentMessages.push({ role: 'tool', content: '调用：' + toolMatch[1] });
                 }
                 fullContent = '';
                 sess.agentMessages.push({ role: 'assistant', content: '' });
@@ -1631,8 +1631,8 @@ async function sendAgent() {
     addHistory('POST', '/v1/chat/agent', body, resp.status, duration);
   } catch (e) {
     if (e.name !== 'AbortError') {
-      toast('Agent error: ' + e.message, 'error');
-      sess.agentMessages.push({ role: 'system', content: 'Error: ' + e.message });
+      toast('智能体错误：' + e.message, 'error');
+      sess.agentMessages.push({ role: 'system', content: '错误：' + e.message });
       renderAgentMessages();
     }
   } finally {
@@ -1653,7 +1653,7 @@ async function sendApiRequest() {
   let url = document.getElementById('apiUrl').value.trim();
   const bodyText = document.getElementById('apiBody').value.trim();
 
-  if (!url) { toast('URL is required', 'error'); return; }
+  if (!url) { toast('请输入 URL', 'error'); return; }
 
   if (!url.startsWith('http')) url = state.config.apiBase + url;
 
@@ -1694,7 +1694,7 @@ async function sendApiRequest() {
     addHistory(method, document.getElementById('apiUrl').value, bodyText ? JSON.parse(bodyText) : null, resp.status, duration);
   } catch (e) {
     showResponse(0, Date.now() - startTime, { error: e.message }, e.message);
-    toast('Request failed: ' + e.message, 'error');
+    toast('请求失败：' + e.message, 'error');
   } finally {
     setLoading(false);
   }
@@ -1754,18 +1754,18 @@ function clearApiRequest() {
   document.getElementById('respStatus').style.display = 'none';
   document.getElementById('respTime').textContent = '';
   document.getElementById('respSize').textContent = '';
-  document.getElementById('responseBody').innerHTML = '<div class="empty-state"><p>Send a request to see the response here.</p></div>';
+  document.getElementById('responseBody').innerHTML = '<div class="empty-state"><p>发送请求后在此查看响应。</p></div>';
 }
 
 function copyResponse() {
   const el = document.getElementById('responseBody');
   const text = el.innerText;
-  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard', 'success'));
+  navigator.clipboard.writeText(text).then(() => toast('已复制到剪贴板', 'success'));
 }
 
 async function readFileContent() {
   const filePath = document.getElementById('filePathInput').value.trim();
-  if (!filePath) { toast('File path is required', 'error'); return; }
+  if (!filePath) { toast('请输入文件路径', 'error'); return; }
 
   try {
     const resp = await fetch(state.config.apiBase + '/v1/files/read?path=' + encodeURIComponent(filePath), {
@@ -1787,7 +1787,7 @@ async function readFileContent() {
       `;
     }
   } catch (e) {
-    toast('Read file error: ' + e.message, 'error');
+    toast('读取文件错误：' + e.message, 'error');
   }
 }
 
@@ -1808,10 +1808,10 @@ async function listWorkspaceFiles() {
           </div>
         `).join('') + '</div>';
     } else {
-      el.innerHTML = '<div class="empty-state"><p>No files found in workspace.</p></div>';
+      el.innerHTML = '<div class="empty-state"><p>工作区中未找到文件。</p></div>';
     }
   } catch (e) {
-    toast('List files error: ' + e.message, 'error');
+    toast('列出文件错误：' + e.message, 'error');
   }
 }
 
@@ -1830,10 +1830,10 @@ async function fetchModels() {
         state.models.map(m => `<option value="${m.id}">${m.id}</option>`).join('');
       sel.value = current || (getActiveSession()?.config?.model) || 'auto';
     }
-    document.getElementById('modelInfo').textContent = state.models.length + ' models';
-    toast('Models loaded: ' + state.models.length, 'success');
+    document.getElementById('modelInfo').textContent = state.models.length + ' 个模型';
+    toast('已加载模型：' + state.models.length, 'success');
   } catch (e) {
-    toast('Fetch models error: ' + e.message, 'error');
+    toast('获取模型错误：' + e.message, 'error');
   }
 }
 
@@ -1845,9 +1845,9 @@ async function fetchTools() {
     const json = await resp.json();
     state.tools = json.data || [];
     renderToolTags();
-    toast('Tools loaded: ' + state.tools.length, 'success');
+    toast('已加载工具：' + state.tools.length, 'success');
   } catch (e) {
-    toast('Fetch tools error: ' + e.message, 'error');
+    toast('获取工具错误：' + e.message, 'error');
   }
 }
 
@@ -1880,14 +1880,14 @@ async function checkStatus() {
 
     if (json.status === 'ok') {
       dot.className = 'status-dot ok';
-      text.textContent = 'Connected - ' + (json.edition || '');
+      text.textContent = '已连接 - ' + (json.edition || '');
       badge.textContent = json.edition || '';
       badge.style.display = '';
 
       const acBadge = document.getElementById('autoContinueBadge');
       if (json.auto_continue) {
         acBadge.style.display = '';
-        acBadge.textContent = 'Auto-Continue (' + (json.max_continues || 5) + ')';
+        acBadge.textContent = '自动继续 (' + (json.max_continues || 5) + ')';
       } else {
         acBadge.style.display = 'none';
       }
@@ -1903,11 +1903,11 @@ async function checkStatus() {
       }
     } else {
       dot.className = 'status-dot';
-      text.textContent = 'Error';
+      text.textContent = '错误';
     }
   } catch (e) {
     document.getElementById('statusDot').className = 'status-dot';
-    document.getElementById('statusText').textContent = 'Disconnected';
+    document.getElementById('statusText').textContent = '连接已断开';
   }
 }
 
@@ -1916,16 +1916,16 @@ async function exportSession() {
   if (!sess) return;
   try {
     const res = await apiGet('/v1/sessions/' + encodeURIComponent(sess.id) + '/export');
-    if (res.status !== 200) throw new Error('Export failed: ' + res.status);
+    if (res.status !== 200) throw new Error('导出失败：' + res.status);
     const blob = new Blob([JSON.stringify(res.body, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = (sess.name || sess.id).replace(/\s+/g, '_') + '.json';
     a.click();
     URL.revokeObjectURL(a.href);
-    toast('Session exported', 'success');
+    toast('会话已导出', 'success');
   } catch (e) {
-    toast('Export failed: ' + e.message, 'error');
+    toast('导出失败：' + e.message, 'error');
   }
 }
 
@@ -1984,7 +1984,7 @@ function addKvRow(containerId) {
   const container = document.getElementById(containerId);
   const row = document.createElement('div');
   row.className = 'kv-row';
-  row.innerHTML = '<input type="checkbox" class="kv-check" checked><input placeholder="Key"><input placeholder="Value"><span class="kv-del" onclick="this.parentElement.remove()">&times;</span>';
+  row.innerHTML = '<input type="checkbox" class="kv-check" checked><input placeholder="键"><input placeholder="值"><span class="kv-del" onclick="this.parentElement.remove()">&times;</span>';
   container.appendChild(row);
 }
 
@@ -2107,7 +2107,7 @@ function renderDynamicConfig() {
   // Group params by group
   const groups = {};
   for (const p of configSchemaParams) {
-    const g = p.group || 'General';
+    const g = p.group || '通用';
     if (!groups[g]) groups[g] = [];
     groups[g].push(p);
   }
@@ -2143,8 +2143,8 @@ function renderDynamicConfig() {
         html += '</select>';
       } else if (p.type === 'boolean') {
         html += '<select id="cfg_' + p.key + '">';
-        html += '<option value="true"' + (val ? ' selected' : '') + '>Yes</option>';
-        html += '<option value="false"' + (!val ? ' selected' : '') + '>No</option>';
+        html += '<option value="true"' + (val ? ' selected' : '') + '>是</option>';
+        html += '<option value="false"' + (!val ? ' selected' : '') + '>否</option>';
         html += '</select>';
       } else if (p.type === 'number') {
         const min = p.min != null ? ' min="' + p.min + '"' : '';
@@ -2194,16 +2194,16 @@ function syncUIFromConfig() {
 
 async function saveAsDefault() {
   const sess = getActiveSession();
-  if (!sess) { toast('No active session', 'error'); return; }
+  if (!sess) { toast('没有活动会话', 'error'); return; }
   try {
     const res = await apiPut('/v1/config/defaults', sess.config);
     if (res.status === 200) {
-      toast('Defaults saved — new sessions will inherit these settings', 'success');
+      toast('默认配置已保存，新会话将继承这些设置', 'success');
     } else {
-      toast('Failed to save defaults: ' + res.status, 'error');
+      toast('保存默认配置失败：' + res.status, 'error');
     }
   } catch (e) {
-    toast('Save defaults error: ' + e.message, 'error');
+    toast('保存默认配置错误：' + e.message, 'error');
   }
 }
 
